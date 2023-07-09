@@ -4,7 +4,7 @@ import Calendar from "../elements/Calendar";
 import Inputs from "../elements/Inputs";
 import Selects from "../elements/Selects";
 import MultiSelects from "../elements/MultiSelects";
-import { Button } from "antd";
+import { Button, Modal } from "antd";
 import Chart from "../elements/Chart";
 import RangeSelect from "../elements/RangeSelect";
 
@@ -20,7 +20,6 @@ function Main() {
   const handleEndDateChange = (endDate: string | null) => {
     setEndDate(endDate !== null ? endDate : null);
   };
-  console.log("startDate:", startDate, "endDate:", endDate);
 
   // 카테고리, 키워드 조회
   const [category, setCategory] = useState("");
@@ -33,23 +32,20 @@ function Main() {
   const handleKeywordChange = (value: string) => {
     setKeyword(value);
   };
-  console.log("category:", category, "keyword:", keyword);
 
   // 나이대 조회
-  const [checkedList, setCheckedList] = useState<string[]>([]);
+  const [ages, setAges] = useState<string[]>([]);
 
   const handleCheckedListChange = (list: string[]) => {
-    setCheckedList(list);
+    setAges(list);
   };
-  console.log("checkedList:", checkedList);
 
   // 기간 조회
-  const [range, setRange] = useState("date");
+  const [timeUnit, setTimeUnit] = useState("date");
 
   const handleRangeChange = (selectedRange: string) => {
-    setRange(selectedRange);
+    setTimeUnit(selectedRange);
   };
-  console.log("range:", range);
 
   // 성별, 기기 조회
   const genderOptions = [
@@ -58,10 +54,10 @@ function Main() {
     { value: "f", label: "여성" },
   ];
 
-  const [genderSelectedOption, setGenderSelectedOption] = useState("");
+  const [gender, setGender] = useState("");
 
   const genderChange = (value: string) => {
-    setGenderSelectedOption(value);
+    setGender(value);
   };
 
   const deviceOptions = [
@@ -70,15 +66,53 @@ function Main() {
     { value: "mo", label: "모바일" },
   ];
 
-  const [deviceSelectedOption, setDeviceSelectedOption] = useState("");
+  const [device, setDevice] = useState("");
 
   const deviceChange = (value: string) => {
-    setDeviceSelectedOption(value);
+    setDevice(value);
   };
-  console.log('gender:', genderSelectedOption, 'device:', deviceSelectedOption)
 
+  // 필수 입력 유효성 검사
+  const config = {
+    title: '필수 입력 누락',
+    content: (
+      <>
+      {!startDate && <span>'시작날짜' </span>}
+      {!endDate && <span>'종료날짜' </span>}
+      {!category && <span>'카테고리' </span>}
+      {!keyword && <span>'키워드' </span>}
+      {!timeUnit && <span>'구간' </span>}
+      <span>을(를) <br />반드시 입력해주세요!</span>
+    </>
+    )
+  }
+  
+  const [modal, contextHolder] = Modal.useModal();
+
+  // 조회하기 핸들러
+  const submitHandler = () => {
+    if (!startDate || !endDate || !timeUnit || !category || !keyword) {
+      modal.error(config);
+    }
+    else return console.log(
+      "기간:",
+      startDate,
+      "~",
+      endDate,
+      "구간단위:",
+      timeUnit,
+      category,
+      keyword,
+      "기기:",
+      device,
+      "성별:",
+      gender,
+      ages
+    );
+  };
   return (
     <Layout>
+      {contextHolder}
       <Container>
         <BackgroundShadow>
           <h1>쇼핑인사이트 키워드 연령별 트렌드</h1>
@@ -106,22 +140,18 @@ function Main() {
 
           <MiddelContainer>
             <MultiSelects
-              checkedList={checkedList}
+              checkedList={ages}
               onCheckedListChange={handleCheckedListChange}
             />
           </MiddelContainer>
 
           <SelectContainer>
             <RangeSelect onRangeChange={handleRangeChange} />
-            <Selects
-              options={genderOptions}
-              onOptionChange={genderChange}
-            />
-            <Selects
-              options={deviceOptions}
-              onOptionChange={deviceChange}
-            />
-            <StyledBtn type="text">조회하기 📃</StyledBtn>
+            <Selects options={genderOptions} onOptionChange={genderChange} />
+            <Selects options={deviceOptions} onOptionChange={deviceChange} />
+            <StyledBtn type="text" onClick={submitHandler}>
+              조회하기 📃
+            </StyledBtn>
           </SelectContainer>
 
           <Chart />
