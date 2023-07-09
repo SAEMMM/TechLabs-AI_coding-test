@@ -6,13 +6,14 @@ import Selects from "../elements/Selects";
 import MultiSelects from "../elements/MultiSelects";
 import { Button } from "antd";
 import Chart from "../elements/Chart";
+import RangeSelect from "../elements/RangeSelect";
 
 function Main() {
   return (
     <Layout>
       <Container>
         <BackgroundShadow>
-          <h1>쇼핑인사이트 키워드 연령별 트렌드 조회</h1>
+          <h1>쇼핑인사이트 키워드 연령별 트렌드</h1>
 
           <InputContainer>
             <InputBox>
@@ -29,12 +30,15 @@ function Main() {
             </InputBox>
           </InputContainer>
 
+          <MiddelContainer>
+            <MultiSelects />
+            <RangeSelect />
+          </MiddelContainer>
+
           <SelectContainer>
             <Selects />
-            <MultiSelects />
             <Selects />
-            <Selects />
-            <StyledBtn type="text">조회</StyledBtn>
+            <StyledBtn type="text">조회하기 📃</StyledBtn>
           </SelectContainer>
 
           <Chart />
@@ -85,16 +89,24 @@ const InputLabel = styled.p`
   margin-right: 10px;
 `;
 
+const MiddelContainer = styled.div`
+  width: 100%;
+  padding: 5px;
+  justify-content: space-around;
+  ${flexRow};
+`;
+
 const SelectContainer = styled.div`
   width: 100%;
   padding: 5px;
   justify-content: center;
   ${flexRow};
+  margin-top: 10px;
   margin-bottom: 30px;
 `;
 
 const StyledBtn = styled(Button)`
   font-weight: 700;
-  font-size: 16px;
   line-height: 20px;
+  margin-left: 20px;
 `;
