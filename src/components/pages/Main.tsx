@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import styled, { css } from "styled-components";
 import Calendar from "../elements/Calendar";
 import Inputs from "../elements/Inputs";
@@ -9,6 +9,74 @@ import Chart from "../elements/Chart";
 import RangeSelect from "../elements/RangeSelect";
 
 function Main() {
+  // 기간 조회
+  const [startDate, setStartDate] = useState<string | null>(null);
+  const [endDate, setEndDate] = useState<string | null>(null);
+
+  const handleStartDateChange = (startDate: string | null) => {
+    setStartDate(startDate !== null ? startDate : null);
+  };
+
+  const handleEndDateChange = (endDate: string | null) => {
+    setEndDate(endDate !== null ? endDate : null);
+  };
+  console.log("startDate:", startDate, "endDate:", endDate);
+
+  // 카테고리, 키워드 조회
+  const [category, setCategory] = useState("");
+  const [keyword, setKeyword] = useState("");
+
+  const handleCategoryChange = (value: string) => {
+    setCategory(value);
+  };
+
+  const handleKeywordChange = (value: string) => {
+    setKeyword(value);
+  };
+  console.log("category:", category, "keyword:", keyword);
+
+  // 나이대 조회
+  const [checkedList, setCheckedList] = useState<string[]>([]);
+
+  const handleCheckedListChange = (list: string[]) => {
+    setCheckedList(list);
+  };
+  console.log("checkedList:", checkedList);
+
+  // 기간 조회
+  const [range, setRange] = useState("date");
+
+  const handleRangeChange = (selectedRange: string) => {
+    setRange(selectedRange);
+  };
+  console.log("range:", range);
+
+  // 성별, 기기 조회
+  const genderOptions = [
+    { value: "all", label: "성별 전체" },
+    { value: "m", label: "남성" },
+    { value: "f", label: "여성" },
+  ];
+
+  const [genderSelectedOption, setGenderSelectedOption] = useState("");
+
+  const genderChange = (value: string) => {
+    setGenderSelectedOption(value);
+  };
+
+  const deviceOptions = [
+    { value: "all", label: "기기 전체" },
+    { value: "pc", label: "PC" },
+    { value: "mo", label: "모바일" },
+  ];
+
+  const [deviceSelectedOption, setDeviceSelectedOption] = useState("");
+
+  const deviceChange = (value: string) => {
+    setDeviceSelectedOption(value);
+  };
+  console.log('gender:', genderSelectedOption, 'device:', deviceSelectedOption)
+
   return (
     <Layout>
       <Container>
@@ -17,27 +85,42 @@ function Main() {
 
           <InputContainer>
             <InputBox>
-              <InputLabel>시작일자:</InputLabel> <Calendar />
+              <InputLabel>기간:</InputLabel>{" "}
+              <Calendar
+                setStartDate={setStartDate}
+                setEndDate={setEndDate}
+                onStartDateChange={handleStartDateChange}
+                onEndDateChange={handleEndDateChange}
+              />
+            </InputBox>
+
+            <InputBox>
+              <InputLabel>카테고리:</InputLabel>{" "}
+              <Inputs onValueChange={handleCategoryChange} />
             </InputBox>
             <InputBox>
-              <InputLabel>종료일자:</InputLabel> <Calendar />
-            </InputBox>
-            <InputBox>
-              <InputLabel>카테고리:</InputLabel> <Inputs />
-            </InputBox>
-            <InputBox>
-              <InputLabel>키워드:</InputLabel> <Inputs />
+              <InputLabel>키워드:</InputLabel>{" "}
+              <Inputs onValueChange={handleKeywordChange} />
             </InputBox>
           </InputContainer>
 
           <MiddelContainer>
-            <MultiSelects />
-            <RangeSelect />
+            <MultiSelects
+              checkedList={checkedList}
+              onCheckedListChange={handleCheckedListChange}
+            />
           </MiddelContainer>
 
           <SelectContainer>
-            <Selects />
-            <Selects />
+            <RangeSelect onRangeChange={handleRangeChange} />
+            <Selects
+              options={genderOptions}
+              onOptionChange={genderChange}
+            />
+            <Selects
+              options={deviceOptions}
+              onOptionChange={deviceChange}
+            />
             <StyledBtn type="text">조회하기 📃</StyledBtn>
           </SelectContainer>
 

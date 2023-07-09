@@ -1,11 +1,22 @@
-import React from "react";
+import React, { useState } from "react";
 import { Input } from "antd";
 import styled from "styled-components";
 
-function Inputs() {
+interface InputsProps {
+  onValueChange: (value: string) => void;
+}
+
+function Inputs({ onValueChange }: InputsProps) {
+  const [inputValue, setInputValue] = useState("");
+
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setInputValue(value);
+    onValueChange(value);
+  };
   return (
     <>
-      <StyledInput placeholder="Basic usage" />
+      <StyledInput placeholder="입력해주세요" value={inputValue} onChange={handleChange} />
     </>
   );
 }

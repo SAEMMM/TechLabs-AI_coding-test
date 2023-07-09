@@ -1,18 +1,24 @@
-import { Select } from "antd";
+import { Select, SelectProps } from "antd";
 import React from "react";
 import styled from "styled-components";
 
-function Selects() {
+interface SelectsProps {
+  options: { value: string; label: string }[];
+  onOptionChange: (value: string) => void;
+}
+
+function Selects({ options, onOptionChange }: SelectsProps) {
+  const handleChange = (value: string) => {
+    onOptionChange(value);
+  };
+  
   return (
     <>
       <StyledSelect
-        defaultValue="timeUnit"
+        defaultValue={options[0].value}
         bordered={false}
-        options={[
-          { value: "date", label: "date" },
-          { value: "week", label: "week" },
-          { value: "month", label: "month" },
-        ]}
+        options={options}
+        onChange={handleChange}
       />
     </>
   );
@@ -20,7 +26,7 @@ function Selects() {
 
 export default Selects;
 
-const StyledSelect = styled(Select)`
-  width: 100px;
+const StyledSelect = styled(Select)<SelectProps<string>>`
+  width: 110px;
   text-align: center;
 `;
