@@ -40,7 +40,7 @@ function MultiSelects({checkedList, onCheckedListChange}: MultiSelectsProps) {
       </StyledCheckbox>
       <CheckboxGroup
         options={plainOptions}
-        value={checkedList}
+        value={checkedList.map((option) => plainOptions.indexOf(option))}
         onChange={onChange}
       />
     </StyledMultiContainer>

@@ -7,8 +7,12 @@ import MultiSelects from "../elements/MultiSelects";
 import { Button, Modal } from "antd";
 import Chart from "../elements/Chart";
 import RangeSelect from "../elements/RangeSelect";
+import { useDispatch } from "react-redux";
+import { getShopFetch } from "../../shopState";
 
 function Main() {
+  const dispatch = useDispatch();
+
   // 기간 조회
   const [startDate, setStartDate] = useState<string | null>(null);
   const [endDate, setEndDate] = useState<string | null>(null);
@@ -74,42 +78,44 @@ function Main() {
 
   // 필수 입력 유효성 검사
   const config = {
-    title: '필수 입력 누락',
+    title: "필수 입력 누락",
     content: (
       <>
-      {!startDate && <span>'시작날짜' </span>}
-      {!endDate && <span>'종료날짜' </span>}
-      {!category && <span>'카테고리' </span>}
-      {!keyword && <span>'키워드' </span>}
-      {!timeUnit && <span>'구간' </span>}
-      <span>을(를) <br />반드시 입력해주세요!</span>
-    </>
-    )
-  }
-  
+        {!startDate && <span>'시작날짜' </span>}
+        {!endDate && <span>'종료날짜' </span>}
+        {!category && <span>'카테고리' </span>}
+        {!keyword && <span>'키워드' </span>}
+        {!timeUnit && <span>'구간' </span>}
+        <span>
+          을(를) <br />
+          반드시 입력해주세요!
+        </span>
+      </>
+    ),
+  };
+
   const [modal, contextHolder] = Modal.useModal();
 
   // 조회하기 핸들러
   const submitHandler = () => {
     if (!startDate || !endDate || !timeUnit || !category || !keyword) {
       modal.error(config);
+    } else {
+      const data = {
+        startDate,
+        endDate,
+        category,
+        keyword,
+        ages,
+        timeUnit,
+        gender,
+        device,
+      };
+
+      dispatch(getShopFetch(data));
     }
-    else return console.log(
-      "기간:",
-      startDate,
-      "~",
-      endDate,
-      "구간단위:",
-      timeUnit,
-      category,
-      keyword,
-      "기기:",
-      device,
-      "성별:",
-      gender,
-      ages
-    );
   };
+
   return (
     <Layout>
       {contextHolder}
