@@ -16,7 +16,7 @@ function Inputs({ onValueChange }: InputsProps) {
   };
   return (
     <>
-      <StyledInput placeholder="입력해주세요" value={inputValue} onChange={handleChange} />
+      <StyledInput placeholder="Keyword" value={inputValue} onChange={handleChange} />
     </>
   );
 }

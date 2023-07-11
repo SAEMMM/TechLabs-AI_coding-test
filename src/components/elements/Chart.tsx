@@ -43,7 +43,7 @@ function Chart() {
       state.shop
   );
 
-  if (shopData.results[0].data.length === 0) {
+  if (!shopData || !shopData.results || shopData.results[0].data.length === 0) {
     return (
       <Empty />
     );

@@ -8,7 +8,8 @@ import { Button, Modal } from "antd";
 import Chart from "../elements/Chart";
 import RangeSelect from "../elements/RangeSelect";
 import { useDispatch } from "react-redux";
-import { getShopFetch, getShopSuccess } from "../../shopState";
+import { getShopFetch } from "../../shopState";
+import SelectCategory from "../elements/SelectCategory";
 
 function Main() {
   const dispatch = useDispatch();
@@ -115,9 +116,6 @@ function Main() {
     }
   };
 
-  // const getData = dispatch(getShopSuccess)
-  // console.log('getData', getData)
-
   return (
     <Layout>
       {contextHolder}
@@ -138,7 +136,7 @@ function Main() {
 
             <InputBox>
               <InputLabel>카테고리:</InputLabel>{" "}
-              <Inputs onValueChange={handleCategoryChange} />
+              <SelectCategory onOptionChange={handleCategoryChange} />
             </InputBox>
             <InputBox>
               <InputLabel>키워드:</InputLabel>{" "}
