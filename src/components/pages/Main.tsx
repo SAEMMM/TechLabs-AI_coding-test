@@ -8,7 +8,7 @@ import { Button, Modal } from "antd";
 import Chart from "../elements/Chart";
 import RangeSelect from "../elements/RangeSelect";
 import { useDispatch } from "react-redux";
-import { getShopFetch } from "../../shopState";
+import { getShopFetch } from "../../slice/shopState";
 import SelectCategory from "../elements/SelectCategory";
 
 function Main() {

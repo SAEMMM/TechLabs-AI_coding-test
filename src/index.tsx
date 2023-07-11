@@ -8,16 +8,30 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
-import shopReducer from "./shopState";
-import { watchSubmitData } from "./shopSaga";
+import shopReducer from "./slice/shopState";
+import { watchSubmitData } from "./saga/shopSaga";
+import { persistStore, persistReducer } from "redux-persist";
+import storage from "redux-persist/lib/storage";
+import { PersistGate } from "redux-persist/integration/react";
 
 const saga = createSagaMiddleware();
+
+const persistConfig = {
+  key: "root",
+  storage,
+};
+
+const persistedReducer = persistReducer(persistConfig, shopReducer);
+
 const store = configureStore({
   reducer: {
-    shop: shopReducer,
+    shop: persistedReducer,
   },
-  middleware: [saga],
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({ serializableCheck: false }).concat(saga),
 });
+
+const persistor = persistStore(store);
 saga.run(watchSubmitData);
 
 const root = ReactDOM.createRoot(
@@ -28,9 +42,11 @@ const queryClient = new QueryClient();
 
 root.render(
   <Provider store={store}>
-    <QueryClientProvider client={queryClient}>
-      <App />
-      <ReactQueryDevtools />
-    </QueryClientProvider>
+    <PersistGate loading={null} persistor={persistor}>
+      <QueryClientProvider client={queryClient}>
+        <App />
+        <ReactQueryDevtools />
+      </QueryClientProvider>
+    </PersistGate>
   </Provider>
 );

@@ -1,6 +1,6 @@
 import { call, put, takeLatest } from "redux-saga/effects";
 import axios, { AxiosResponse } from "axios";
-import { getShopFetch, getShopSuccess, getShopFailure } from "./shopState";
+import { getShopFetch, getShopSuccess, getShopFailure } from "../slice/shopState";
 
 interface PostData {
   startDate: string;

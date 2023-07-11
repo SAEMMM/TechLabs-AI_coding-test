@@ -39,16 +39,14 @@ function Chart() {
   console.log("shopData:", shopData);
 
   const shopDataLoading = useSelector(
-    (state: { shop: { shop: ChartData; isLoading: boolean } }) =>
-      state.shop
+    (state: { shop: { shop: ChartData; isLoading: boolean } }) => state.shop.isLoading
   );
+  console.log("shopDataLoading:", shopDataLoading);
 
   if (!shopData || !shopData.results || shopData.results[0].data.length === 0) {
-    return (
-      <Empty />
-    );
+    return <Empty />;
   }
-  if (shopDataLoading.isLoading) {
+  if (shopDataLoading) {
     return (
       <Spin tip="Loading" size="large">
         {" "}

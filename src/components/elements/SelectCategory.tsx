@@ -14,7 +14,7 @@ function SelectCategory({ onOptionChange }: SelectCategoryProps) {
     <>
       <Select
         defaultValue="Category"
-        style={{ width: 130 }}
+        style={{ width: 150 }}
         onChange={handleChange}
         options={[
           {
