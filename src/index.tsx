@@ -8,17 +8,17 @@ import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { Provider } from "react-redux";
 import createSagaMiddleware from "redux-saga";
 import { configureStore } from "@reduxjs/toolkit";
-import shopReducer from './shopState';
-import shopSaga from "./shopSaga";
+import shopReducer from "./shopState";
+import { watchSubmitData } from "./shopSaga";
 
 const saga = createSagaMiddleware();
 const store = configureStore({
   reducer: {
-    shop: shopReducer
+    shop: shopReducer,
   },
   middleware: [saga],
 });
-saga.run(shopSaga)
+saga.run(watchSubmitData);
 
 const root = ReactDOM.createRoot(
   document.getElementById("root") as HTMLElement

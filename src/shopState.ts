@@ -1,42 +1,36 @@
 import { createSlice } from "@reduxjs/toolkit";
 
-export const shopSlice = createSlice({
+interface ShopState {
+  shop: any[];
+  isLoading: boolean;
+}
+
+const initialState: ShopState = {
+  shop: [],
+  isLoading: false,
+};
+
+const shopSlice = createSlice({
   name: "shop",
-  initialState: {
-    shop: null,
-    isLoading: false,
-  },
+  initialState,
   reducers: {
-    getShopFetch: (state) => {
+    getShopFetch: (state, { payload: shop }) => {
       state.isLoading = true;
+      console.log("POST성공", shop);
     },
-    getShopSuccess: (state, action) => {
-      state.shop = action.payload;
+    getShopSuccess: (state, { payload: shop }) => {
+      state.shop = shop;
       state.isLoading = false;
+      console.log("성공", shop);
     },
     getShopFailure: (state) => {
       state.isLoading = false;
+      console.log("실패");
     },
   },
 });
 
-export const { getShopSuccess, getShopFailure } =
+export const { getShopFetch, getShopSuccess, getShopFailure } =
   shopSlice.actions;
-
-export const getShopFetch = (data: {
-  startDate: string;
-  endDate: string;
-  category: string;
-  keyword: string;
-  ages: string[];
-  timeUnit: string;
-  gender: string;
-  device: string;
-}) => {
-  return {
-    type: "shop/getShopFetch",
-    payload: data,
-  };
-};
 
 export default shopSlice.reducer;

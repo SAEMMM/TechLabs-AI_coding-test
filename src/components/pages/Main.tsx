@@ -8,7 +8,7 @@ import { Button, Modal } from "antd";
 import Chart from "../elements/Chart";
 import RangeSelect from "../elements/RangeSelect";
 import { useDispatch } from "react-redux";
-import { getShopFetch } from "../../shopState";
+import { getShopFetch, getShopSuccess } from "../../shopState";
 
 function Main() {
   const dispatch = useDispatch();
@@ -111,10 +111,12 @@ function Main() {
         gender,
         device,
       };
-
       dispatch(getShopFetch(data));
     }
   };
+
+  // const getData = dispatch(getShopSuccess)
+  // console.log('getData', getData)
 
   return (
     <Layout>

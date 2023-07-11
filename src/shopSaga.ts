@@ -1,33 +1,45 @@
-import { call, put, takeEvery } from "redux-saga/effects";
-import { getShopFailure, getShopSuccess } from "./shopState";
+import { call, put, takeLatest } from "redux-saga/effects";
+import axios, { AxiosResponse } from "axios";
+import { getShopFetch, getShopSuccess, getShopFailure } from "./shopState";
 
-function* workGetShopFetch(): Generator<any, any, any> {
+interface PostData {
+  startDate: string;
+  endDate: string;
+  category: string;
+  keyword: string;
+  timeUnit: string;
+  gender: string;
+  device: string;
+  ages: string[];
+}
+
+const postData = async (data: PostData): Promise<AxiosResponse> => {
+  const API_ID = process.env.REACT_APP_CLIENT_ID;
+  const API_SECRET = process.env.REACT_APP_CLIENT_SECRET;
+  const url = '/v1/datalab/shopping/category/keyword/age';
+
+  const headers = {
+    "X-Naver-Client-Id": API_ID,
+    "X-Naver-Client-Secret": API_SECRET,
+  };
+
+  return axios.post<PostData>(url, data, { headers });
+}
+
+function* submitDataSaga(action: { payload: PostData }) {
   try {
-    const shop = yield call(fetchShopData);
-    const formattedShop = yield shop.json();
-    yield put(getShopSuccess(formattedShop));
+    const { payload } = action;
+    const response: AxiosResponse = yield call(postData, payload);
+    yield put(getShopSuccess(response.data));
   } catch (error) {
     yield put(getShopFailure());
   }
 }
 
-function fetchShopData() {
-  // API 요청 함수를 구현하여 네이버 쇼핑 인사이트 API를 호출하고 응답을 반환
-  const API_ID = process.env.REACT_APP_CLIENT_ID;
-  const API_SECRET = process.env.REACT_APP_CLIENT_SECRET;
-  const url = `https://openapi.naver.com/v1/datalab/shopping/category/keyword/age`;
-
-  const headers = new Headers();
-  headers.append("X-Naver-Client-Id", API_ID);
-  headers.append("X-Naver-Client-Secret", API_SECRET);
-
-  return fetch(url, {
-    headers: headers,
-  });
+export function* watchSubmitData() {
+  yield takeLatest(getShopFetch as any, submitDataSaga);
 }
 
-function* shopSaga(): Generator<any, any, any> {
-  yield takeEvery("shop/getShopFetch", workGetShopFetch);
+export default function* shopSaga() {
+  yield watchSubmitData();
 }
-
-export default shopSaga;

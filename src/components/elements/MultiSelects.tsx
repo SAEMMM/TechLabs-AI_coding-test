@@ -12,7 +12,7 @@ interface MultiSelectsProps {
 function MultiSelects({checkedList, onCheckedListChange}: MultiSelectsProps) {
   const CheckboxGroup = Checkbox.Group;
 
-  const plainOptions = ["10대", "20대", "30대", "40대", "50대", "60대"];
+  const plainOptions = ["10", "20", "30", "40", "50", "60"];
 
   const [indeterminate, setIndeterminate] = useState(true);
   const [checkAll, setCheckAll] = useState(false);
@@ -40,7 +40,7 @@ function MultiSelects({checkedList, onCheckedListChange}: MultiSelectsProps) {
       </StyledCheckbox>
       <CheckboxGroup
         options={plainOptions}
-        value={checkedList.map((option) => plainOptions.indexOf(option))}
+        value={checkedList}
         onChange={onChange}
       />
     </StyledMultiContainer>

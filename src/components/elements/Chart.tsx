@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { useSelector } from "react-redux";
 
 import {
   CartesianGrid,
@@ -31,56 +32,21 @@ interface ChartData {
 }
 
 function Chart() {
-  const data: ChartData[] = [
-    {
-      startDate: "2017-08-01",
-      endDate: "2017-09-30",
-      timeUnit: "month",
-      results: [
-        {
-          title: "정장",
-          keyword: ["정장"],
-          data: [
-            {
-              period: "2017-08-01",
-              group: "10",
-              ratio: 9.7021,
-            },
-            {
-              period: "2017-08-01",
-              group: "20",
-              ratio: 57.88466,
-            },
-            {
-              period: "2017-09-01",
-              group: "10",
-              ratio: 13.55561,
-            },
-            {
-              period: "2017-09-01",
-              group: "20",
-              ratio: 100,
-            },
-            {
-              period: "2017-10-01",
-              group: "10",
-              ratio: 21,
-            },
-            {
-              period: "2017-10-01",
-              group: "20",
-              ratio: 70,
-            },
-          ],
-        },
-      ],
-    },
-  ];
+  const shopData = useSelector(
+    (state: { shop: { shop: ChartData } }) => state.shop.shop
+  );
+  console.log("shopData:", shopData);
 
-  const returnData = data[0].results[0].data;
+  if (!shopData || !shopData.results || shopData.results.length === 0) {
+    return <div>No data available</div>;
+  }
 
-  const periods = [...new Set(returnData.map((item) => item.period))];
-  const groups = [...new Set(returnData.map((item) => item.group))];
+  const returnData = shopData.results[0].data;
+
+  const periods = [...new Set(returnData.map((item: DataItem) => item.period))];
+  const groups = [
+    ...new Set(returnData.map((item: DataItem) => item.group)),
+  ] as unknown[] as string[];
 
   const colors = [
     "#DB7093",
@@ -93,10 +59,18 @@ function Chart() {
 
   // 날짜(period)별 각 연령대(group)의 ratio
   const updatedData = periods.map((period) => {
-    const periodData = returnData.filter((item) => item.period === period);
+    const periodData = returnData.filter(
+      (item: DataItem) => item.period === period
+    );
     const groupData: { [group: string]: number } = {};
-    groups.forEach((group) => {
-      const matchingItem = periodData.find((item) => item.group === group);
+    const groups: string[] = Array.from(
+      new Set(returnData.map((item: DataItem) => item.group))
+    );
+
+    groups.forEach((group: string) => {
+      const matchingItem = periodData.find(
+        (item: DataItem) => item.group === group
+      );
       if (matchingItem) {
         groupData[group] = matchingItem.ratio;
       } else {
