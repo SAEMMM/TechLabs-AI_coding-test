@@ -1,5 +1,6 @@
 import React from "react";
 import styled from "styled-components";
+import { Empty, Spin } from "antd";
 import { useSelector } from "react-redux";
 
 import {
@@ -37,8 +38,22 @@ function Chart() {
   );
   console.log("shopData:", shopData);
 
-  if (!shopData || !shopData.results || shopData.results.length === 0) {
-    return <div>No data available</div>;
+  const shopDataLoading = useSelector(
+    (state: { shop: { shop: ChartData; isLoading: boolean } }) =>
+      state.shop
+  );
+
+  if (shopData.results[0].data.length === 0) {
+    return (
+      <Empty />
+    );
+  }
+  if (shopDataLoading.isLoading) {
+    return (
+      <Spin tip="Loading" size="large">
+        {" "}
+      </Spin>
+    );
   }
 
   const returnData = shopData.results[0].data;
