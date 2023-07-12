@@ -1,5 +1,9 @@
 # 네이버 쇼핑인사이트 키워드 연령별 트렌드
 
+
+https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/6b942dfa-eb8c-4181-a900-698dc7e4400d
+
+
 ![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/7cb63d2e-c761-4e72-a120-1f316fdf6357)
 
 
