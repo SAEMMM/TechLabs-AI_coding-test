@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import styled, { css } from "styled-components";
 import Calendar from "../elements/Calendar";
 import Inputs from "../elements/Inputs";
@@ -16,6 +16,7 @@ function Main() {
 
   // 기간 조회
   const [startDate, setStartDate] = useState<string | null>(null);
+
   const [endDate, setEndDate] = useState<string | null>(null);
 
   const handleStartDateChange = (startDate: string | null) => {
@@ -77,6 +78,22 @@ function Main() {
     setDevice(value);
   };
 
+  // persist 가져오기
+  useEffect(() => {
+    const persistedState = localStorage.getItem("persist:root");
+
+    if (persistedState) {
+      const parsedState = JSON.parse(persistedState);
+      const shopState = JSON.parse(parsedState.shop);
+
+      const startDateValue = shopState.startDate;
+      const endDateValue = shopState.endDate;
+
+      setStartDate(startDateValue);
+      setEndDate(endDateValue);
+    }
+  }, []);
+
   // 필수 입력 유효성 검사
   const config = {
     title: "필수 입력 누락",
@@ -127,6 +144,8 @@ function Main() {
             <InputBox>
               <InputLabel>기간:</InputLabel>{" "}
               <Calendar
+                startDate={startDate}
+                endDate={endDate}
                 setStartDate={setStartDate}
                 setEndDate={setEndDate}
                 onStartDateChange={handleStartDateChange}
