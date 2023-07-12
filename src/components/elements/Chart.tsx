@@ -36,12 +36,10 @@ function Chart() {
   const shopData = useSelector(
     (state: { shop: { shop: ChartData } }) => state.shop.shop
   );
-  console.log("shopData:", shopData);
 
   const shopDataLoading = useSelector(
     (state: { shop: { shop: ChartData; isLoading: boolean } }) => state.shop.isLoading
   );
-  console.log("shopDataLoading:", shopDataLoading);
 
   if (!shopData || !shopData.results || shopData.results[0].data.length === 0) {
     return <Empty />;
