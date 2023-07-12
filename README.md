@@ -1,6 +1,6 @@
 # 네이버 쇼핑인사이트 키워드 연령별 트렌드
 
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/f4d71799-3f2d-43ec-b1ce-11509fea6933)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/7cb63d2e-c761-4e72-a120-1f316fdf6357)
 
 
 ## 🛍 프로젝트 소개
@@ -25,29 +25,29 @@ yarn start
 
 ## 💻 기능 소개
 #### 1️⃣ 데이터 없을 때(초기화면)
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/fe943030-672e-4181-a89d-223707de8dbd)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/54d13a08-5f37-49b7-aca2-d148b9f47b2c)
 
 #### 2️⃣ 날짜 선택
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/af3910f9-5ba5-4ed9-8b32-a0bae0d8be38)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/e60414ab-a598-453d-b197-a00da376b875)
 
 #### 3️⃣ 카테고리 선택
-![cat_id](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/9ae6c918-0693-4056-ac7b-7f4a98c500bb) <br />
+![cat_id](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/2a7ce0ac-2d38-47d0-abc4-7920715733e4) <br />
 네이버 쇼핑 -> 카테고리 선택 후 url의 catId
 
 카테고리 종류가 많아서 예시로 <br />
 남성(수트/셋업, 상의, 아우터) 3개 <br />
 여성(원피스, 상의, 아우터) 3개 <br />
 반려동물(강아지/고양이) 1개 = 총 7개의 카테고리 적용
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/5c0f2680-022c-4454-a941-a92fd7b6054b)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/65d57877-5d9e-44b9-a995-3921ef2a928e)
 
 #### 4️⃣ 필수 입력값 유효성 검사
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/87a15dde-7764-4617-a56f-56b09cb9c7b5)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/dc30cacb-0e6d-43f6-862d-50bc9190ea61)
 
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/f683e82c-b3da-43b9-a517-a5e1a662e1cb)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/7aeb82bd-a90d-4429-b8af-9c67ade079e2)
 
 #### 5️⃣ 새로고침 후 데이터 유지 (redux-persist)
 localStorge에 저장
-![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/6c3342e0-899f-4869-acc1-31b7d08c6b6b)
+![image](https://github.com/SAEMMM/TechLabs-AI_coding-test/assets/127721029/0fd57a70-502f-4c8e-8fb4-7ec1fbdf1e89)
 
 
 ## ⛔ CORS 이슈
