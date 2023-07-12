@@ -88,9 +88,11 @@ function Main() {
 
       const startDateValue = shopState.startDate;
       const endDateValue = shopState.endDate;
+      const timeUnitValue = shopState.timeUnit;
 
       setStartDate(startDateValue);
       setEndDate(endDateValue);
+      setTimeUnit(timeUnitValue);
     }
   }, []);
 
@@ -171,7 +173,7 @@ function Main() {
           </MiddelContainer>
 
           <SelectContainer>
-            <RangeSelect onRangeChange={handleRangeChange} />
+            <RangeSelect timeUnit={timeUnit} onRangeChange={handleRangeChange} />
             <Selects options={genderOptions} onOptionChange={genderChange} />
             <Selects options={deviceOptions} onOptionChange={deviceChange} />
             <StyledBtn type="text" onClick={submitHandler}>
