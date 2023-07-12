@@ -18,7 +18,7 @@
 
 ## ⚙ 빌드, 실행 방법
 ```
-yarn build
+yarn or yarn install
 yarn start
 ```
 
